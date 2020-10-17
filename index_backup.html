@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Save form Data in a Text File using JavaScript</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+    	div {
+            padding: 2px;
+            background-color: #f6f6f6;
+            overflow: hidden;
+        }
+    	input[type=text], textarea, select {
+            font: 12px Arial;
+            width: 50%;
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input[type=button]{ 
+            font: 12px Arial;
+            width: auto;
+            float: right;
+            cursor: pointer;
+            padding: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        
+        <!--Add few elements to the form-->
+
+        <div>
+            <input type="text" id="txtLat" placeholder="Enter your latitude" />
+        </div>
+        <div>
+            <input type="text" id="txtLon" placeholder="Enter your longitude" />
+        </div>
+        <div>
+            <input type="text" id="txtLang" placeholder="Enter your language" />
+        </div>
+        <div>
+            <input type="text" id="txtContinent" placeholder="Enter your Continent" />
+        </div>
+        <div>
+            <input type="text" id="txtAqkey" placeholder="Enter your AQI Key" />
+        </div>
+        <div>
+            <input type="text" id="txtDskey" placeholder="Enter your DarkSky Key" />
+        </div>
+        <div>
+            <input type="text" id="txtDsunits" placeholder="Enter your DarkSky Units" />
+        </div>
+        <div>
+            <input type="text" id="txtWukey" placeholder="Enter your Weather Underground Key" />
+        </div>
+        <div>
+            <input type="text" id="txtWuunits" placeholder="Enter your Weather Underground Units" />
+        </div>
+        <div>
+            <input type="text" id="txtMekey" placeholder="Enter your METAR Key" />
+        </div>
+        <div>
+            <input type="text" id="txtMecode" placeholder="Enter your METAR Code" />
+        </div>
+        <div>
+            <input type="text" id="txtPuid" placeholder="Enter your PurpleAir ID" />
+        </div>
+        <div>
+            <input type="text" id="txtAlip" placeholder="Enter your local IP Address" />
+        </div>
+        <div>
+            <input type="text" id="txtAlcountry" placeholder="Enter your Meteoalarm Country (European users only)" />
+        </div>
+        <div>
+            <input type="text" id="txtAlregion" placeholder="Enter your Meteoalarm Region (European users only)" />
+        </div>
+         
+        <div>
+            <input type="button" id="bt" value="Save data to file" onclick="saveFile()" />
+        </div>
+
+    </div>
+</body>
+<script>
+    let saveFile = () => {
+    	
+        // Get the data from each element on the form.
+    	const lat = document.getElementById('txtLat');
+        const lon = document.getElementById('txtLon');
+        const lang = document.getElementById('txtLang');
+        const continent = document.getElementById('txtContinent');
+        const aq_apikey = document.getElementById('txtAqkey');
+        const ds_apikey = document.getElementById('txtDskey');
+        const ds_units = document.getElementById('txtDsunits');
+        const wu_apikey = document.getElementById('txtWukey');
+        const wu_units = document.getElementById('txtWuunits');
+        const me_apikey = document.getElementById('txtMekey');
+        const me_code = document.getElementById('txtMecode');
+        const pu_id = document.getElementById('txtPuid');
+        const al_ip = document.getElementById('txtAlip');
+        const al_country = document.getElementById('txtAlcountry');
+        const al_region = document.getElementById('txtAlregion');
+        
+        
+        // This variable stores all the data.
+        let data = 
+            '\r {' + ' \r\n ' +
+            '"##'+'Start of user fields' +'",'+ ' \r\n ' +
+            '"' + 'lat'+'"' + ':' +"'" + lat.value +"',"+ ' \r\n ' +
+            '"' + 'lon'+'"' + ':' +"'"  +lon.value +"'," + ' \r\n ' + 
+            '"' + 'lang'+'"' + ':' +"'"  + lang.value +"'," + ' \r\n ' +  
+            '"' + 'continent'+'"' + ':' +"'"  + continent.value +"'," + ' \r\n ' +
+            '"' + 'aq_apikey'+'"' + ':' +"'"  + aq_apikey.value +"'," + ' \r\n ' +
+            '"' + 'ds_apikey'+'"' + ':' +"'"  + ds_apikey.value +"'," + ' \r\n ' +
+            '"' + 'ds_units'+'"' + ':' +"'"  + ds_units.value +"'," + ' \r\n ' +
+            '"' + 'wu_apikey'+'"' + ':' +"'"  + wu_apikey.value +"'," + ' \r\n ' +
+            '"' + 'wu_units'+'"' + ':' +"'"  + wu_units.value +"'," + ' \r\n ' +
+            '"' + 'me_apikey'+'"' + ':' +"'"  + me_apikey.value +"'," + ' \r\n ' +
+            '"' + 'me_code'+'"' + ':' +"'"  + me_code.value +"'," + ' \r\n ' +
+            '"' + 'pu_id'+'"' + ':' +"'"  + pu_id.value +"'," + ' \r\n ' +
+            '"' + 'al_ip'+'"' + ':' +"'"  + al_ip.value +"'," + ' \r\n ' +
+            '"' + 'al_country'+'"' + ':' +"'"  + al_country.value +"'," + ' \r\n ' +
+            '"' + 'al_region'+'"' + ':' +"'"  + al_region.value +"'," + ' \r\n ' +
+            '"##'+'List of all user fields above to be replaced in strings below' +'",'+ ' \r\n ' +
+            '"sub_fields"'+':'+"'lat,lon,lang,continent,aq_apikey,ds_apikey,ds_units,wu_apikey,wu_units,me_apikey,me_code,pu_id,al_ip,al_country,al_region'," + ' \r\n ' +
+            '"config_entries3"'+':'+"'''="+ ' \r\n ' +
+            "'Weather34WebServices' "+':'+ ' \r\n ' +
+            '"# Air quality, your own latitude, longitude, token and interval in seconds are required\\n"' + ' \r\n ' +
+            '"# Dark Sky, your own latitude, longitude, API key, language, units and interval in seconds required\\n"' + ' \r\n ' +
+            '"# DarkSky Units key us = US Units, ca = METRIC Units, si = METRICWX Units, uk2 = UK(metric with mph) Units\\n"' + ' \r\n ' +
+            '"# Example https://api.forecast.io/forecast/yourtokenhere/51.94,-0.987?lang=en&units=uk2\\n"' + ' \r\n ' +
+            '"# Weather Underground, your own latitude, longitude, API key, language, units and interval in seconds required\\n"' + ' \r\n ' +
+            '"# Weather Underground Units key e = US, m = METRIC, s = SI(with m/s Scandinavia), h = UK(with mph)\\n"' + ' \r\n ' +
+            '"# Example https://api.weather.com/v3/wx/forecast/daily/5day?geocode=51.94,-0.987&language=en&format=json&units=h&apiKey=yourapikeyhere\\n"' + ' \r\n ' +
+            '"# Earthquake reports interval in seconds required\\n"' + ' \r\n ' +
+            '"# K-Index reports interval in seconds required\\n"' + ' \r\n ' +
+            '"# Metar reports airport code, API Key and interval in seconds required\\n"' + ' \r\n ' +
+            '"# Example https://api.checkwx.com/metar/EGTK/decoded\\n"' + ' \r\n ' +
+            '"# Example X-API-Key:yourapikeyhere\\n"' + ' \r\n ' +
+            '"# Purpleair reports device ID and interval in seconds required\\n"' + ' \r\n ' +
+            '"# Example https://www.purpleair.com/json?show=38365\\n"' + ' \r\n ' +
+            '"# Meteoalrm European weather warnings country code, region code and interval in seconds required\\n"' + ' \r\n ' +
+            '"# Example http://192.168.1.232/weewx/weather34/eualert.php?country=UK&region=013\\n"' + ' \r\n ' +
+            '"# Select the services you require by creating a string of the services above\\n"' + ' \r\n ' +
+            '"# Example services = ds.me.eq.ki.wu.aq.al.ah.ao.aa.pu\\n"' + ' \r\n ' +
+            '"# Select your prefered time interval in seconds for each service\\n"' + ' \r\n ' +
+             '{' + ' \r\n ' +
+            
+            "'aq_interval':'3600'"+','+ ' \r\n ' +
+            "'aq_filename':'/var/www/html/weewx/weather34/jsondata/aqi.txt'"+','+ ' \r\n ' +
+        
+        '}'
+            
+        
+        
+        // Convert the text to BLOB.
+        const textToBLOB = new Blob([data], { type: 'text/plain' });
+        const sFileName = 'services.txt';	   // The file to save the data.
+
+        let newLink = document.createElement("a");
+        newLink.download = sFileName;
+
+        if (window.webkitURL != null) {
+            newLink.href = window.webkitURL.createObjectURL(textToBLOB);
+        }
+        else {
+            newLink.href = window.URL.createObjectURL(textToBLOB);
+            newLink.style.display = "none";
+            document.body.appendChild(newLink);
+        }
+
+        newLink.click(); 
+    }
+</script>
+</html>
